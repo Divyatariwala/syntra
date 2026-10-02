@@ -1,3 +1,5 @@
+from tools.registry import ToolRegistry
+
 def execute_plan(plan: dict) -> dict:
     """
     Execute a Syntra plan.
@@ -6,6 +8,7 @@ def execute_plan(plan: dict) -> dict:
     The LLM and real tools will be introduced later.
     """
 
+    registry = ToolRegistry()
     results = []
 
     for step in plan["steps"]:
