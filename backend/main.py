@@ -6,7 +6,7 @@ from models.task import Task, TaskStatus
 from services.task_service import create_task as save_task, get_task
 from agents.executor import execute_plan
 from agents.evaluator import evaluate_result
-
+from tools.registry import ToolRegistry
 
 app = FastAPI(
     title="Syntra API",
@@ -112,3 +112,14 @@ def execute_task(task_id: str):
         task.status = TaskStatus.FAILED
 
     return task
+
+@app.get("/api/tools")
+def list_tools():
+    registry = ToolRegistry()
+
+    return {
+        "tools": [
+            tool.definition()
+            for tool in registry.list_tools()
+        ]
+    }
